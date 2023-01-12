@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="142.0" prefWidth="282.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="142.0" prefWidth="282.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -23,9 +23,9 @@
             <Label layoutX="29.0" layoutY="71.0" text="Password" />
             <TextField layoutX="103.0" layoutY="35.0" />
             <TextField layoutX="103.0" layoutY="67.0" />
-            <Label layoutX="27.0" layoutY="105.0" text="Timezone:" />
-            <Button layoutX="178.0" layoutY="101.0" mnemonicParsing="false" text="Login" />
-            <Label layoutX="89.0" layoutY="105.0" text="timezoneLabel" />
+            <Label layoutX="27.0" layoutY="105.0" text="Location" />
+            <Button layoutX="194.0" layoutY="101.0" mnemonicParsing="false" text="Login" />
+            <Label layoutX="80.0" layoutY="105.0" text="locationLabel" />
          </children></AnchorPane>
    </children>
 </GridPane>

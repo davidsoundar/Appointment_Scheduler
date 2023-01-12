@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+   <children>
+      <Label layoutX="72.0" layoutY="35.0" text="Appointments">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="72.0" layoutY="308.0" text="Customers">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView layoutX="60.0" layoutY="76.0" prefHeight="200.0" prefWidth="846.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="ID" />
+          <TableColumn prefWidth="75.0" text="Title" />
+            <TableColumn prefWidth="75.0" text="Type" />
+            <TableColumn prefWidth="75.0" text="Description" />
+            <TableColumn prefWidth="75.0" text="Location" />
+            <TableColumn prefWidth="107.0" text="Start Date/Time" />
+            <TableColumn prefWidth="108.0" text="End Date/Time" />
+            <TableColumn prefWidth="84.0" text="Customer ID" />
+            <TableColumn prefWidth="65.0" text="User ID" />
+            <TableColumn prefWidth="106.0" text="Contact Name" />
+        </columns>
+      </TableView>
+      <TableView layoutX="60.0" layoutY="344.0" prefHeight="200.0" prefWidth="846.0">
+         <columns>
+            <TableColumn text="ID" />
+            <TableColumn prefWidth="133.0" text="Name" />
+            <TableColumn prefWidth="162.0" text="Address" />
+            <TableColumn minWidth="0.0" prefWidth="82.0" text="Postal Code" />
+            <TableColumn minWidth="5.0" prefWidth="104.0" text="Country" />
+            <TableColumn prefWidth="113.0" text="Phone Number" />
+            <TableColumn prefWidth="171.0" text="Division" />
+         </columns>
+      </TableView>
+      <Button layoutX="60.0" layoutY="553.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" text="Reports" />
+      <Button layoutX="717.0" layoutY="553.0" mnemonicParsing="false" text="Add" />
+      <Button layoutX="769.0" layoutY="553.0" mnemonicParsing="false" text="Update" />
+      <Button layoutX="833.0" layoutY="553.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="717.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
+      <Button layoutX="769.0" layoutY="288.0" mnemonicParsing="false" text="Update" />
+      <Button layoutX="833.0" layoutY="288.0" mnemonicParsing="false" text="Delete" />
+      <RadioButton layoutX="650.0" layoutY="40.0" mnemonicParsing="false" text="All">
+         <toggleGroup>
+            <ToggleGroup fx:id="tg1" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="717.0" layoutY="40.0" mnemonicParsing="false" text="Week" toggleGroup="$tg1" />
+      <RadioButton layoutX="796.0" layoutY="40.0" mnemonicParsing="false" text="Month" toggleGroup="$tg1" />
+   </children>
+</AnchorPane>
