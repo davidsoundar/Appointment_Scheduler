@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="142.0" prefWidth="282.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="175.0" prefWidth="278.0">
+         <children>
+            <Label layoutX="27.0" layoutY="39.0" text="Username" />
+            <Label layoutX="119.0" layoutY="6.0" text="Login">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="71.0" text="Password" />
+            <TextField layoutX="103.0" layoutY="35.0" />
+            <TextField layoutX="103.0" layoutY="67.0" />
+            <Label layoutX="27.0" layoutY="105.0" text="Timezone:" />
+            <Button layoutX="178.0" layoutY="101.0" mnemonicParsing="false" text="Login" />
+            <Label layoutX="89.0" layoutY="105.0" text="timezoneLabel" />
+         </children></AnchorPane>
+   </children>
+</GridPane>
