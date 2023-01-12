@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="507.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.Customer">
+<AnchorPane prefHeight="507.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AppointmentsController">
     <children>
         <Label layoutX="119.0" layoutY="26.0" text="Appointment">
             <font>
@@ -51,7 +51,7 @@
             </children>
         </GridPane>
         <Button layoutX="176.0" layoutY="458.0" mnemonicParsing="false" text="Save" />
-        <Button layoutX="233.0" layoutY="458.0" mnemonicParsing="false" text="Cancel" />
+        <Button layoutX="233.0" layoutY="458.0" mnemonicParsing="false" onAction="#ClickCancel" text="Cancel" />
       <ComboBox layoutX="277.0" layoutY="266.0" prefHeight="25.0" prefWidth="77.0" />
       <ComboBox layoutX="277.0" layoutY="300.0" prefHeight="25.0" prefWidth="77.0" />
     </children>
