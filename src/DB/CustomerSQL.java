@@ -41,7 +41,7 @@ public class CustomerSQL {
      * @return observable list
      * @throws SQLException
      */
-    public static ObservableList<Customer> customerObservableList() throws SQLException {
+    public static ObservableList<Customer> customerList() throws SQLException {
         Connection connection = JDBC.getConnection();
         ObservableList<Customer> customers = FXCollections.observableArrayList();
         String sql = "SELECT Customer_ID, Customer_Name FROM customers;";
@@ -53,6 +53,31 @@ public class CustomerSQL {
             customers.add(customer);
         }
         return customers;
+    }
+
+    /**
+     * Adds a customer into the database
+     * @param name
+     * @param address
+     * @param postal
+     * @param phone
+     * @param divisionID
+     * @return
+     * @throws SQLException
+     */
+    public static boolean addCustomer(String name, String address, String postal, String phone, String divisionID) throws SQLException {
+        String sql = "INSERT INTO customers(Customer_Name. Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
+
+        try (Connection connection = JDBC.getConnection();
+             PreparedStatement s = connection.prepareStatement(sql)) {
+            s.setString(1, name);
+            s.setString(2, address);
+            s.setString(3, postal);
+            s.setString(4, phone);
+            s.setInt(5, Integer.parseInt(divisionID));
+            s.executeUpdate();
+            return true;
+        }
     }
 
     /**
@@ -79,5 +104,23 @@ public class CustomerSQL {
         s.setInt(6, customerID);
         s.execute();
         return true;
+    }
+
+    /**
+     * Deletes customer  from database
+     * @param customerID int value
+     * @return boolean
+     * @throws SQLException
+     */
+    public static boolean deleteCustomer(int customerID) throws SQLException {
+        String sql = "DELETE FROM customers WHERE Customer_ID=?;";
+
+        try(Connection connection = JDBC.getConnection();
+        PreparedStatement s = connection.prepareStatement(sql)) {
+            s.setInt(1, customerID);
+            s.executeUpdate();
+
+            return true;
+        }
     }
 }
