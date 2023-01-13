@@ -33,6 +33,16 @@ public class Customer {
     }
 
     /**
+     * Constructor for
+     * @param customerID
+     * @param customerName
+     */
+    public Customer(int customerID, String customerName) {
+        customer_ID = customerID;
+        customer_Name = customerName;
+    }
+
+    /**
      * customer ID getter
      * @return customer ID
      */

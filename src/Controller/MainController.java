@@ -1,12 +1,16 @@
 package Controller;
 
+import Model.Appointment;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 
 
@@ -14,6 +18,8 @@ import java.io.IOException;
  * Controller for the main screen
  */
 public class MainController {
+
+    public TableView<Appointment> appointmentsTable;
 
     /**
      * public function to return to the main screen
@@ -26,6 +32,21 @@ public class MainController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void ClickUpdateAppointment(ActionEvent event) throws IOException {
+        Appointment appointment = appointmentsTable.getSelectionModel().getSelectedItem();
+        if (appointment != null) {
+            FXMLLoader loader = new FXMLLoader((getClass()).getResource("Appointment.fxml"));
+            Parent root = loader.load();
+            AppointmentsController controller = loader.getController();
+            controller.appointmentData(appointment);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        }
     }
 }
 

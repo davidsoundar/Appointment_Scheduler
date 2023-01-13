@@ -16,7 +16,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TableView layoutX="60.0" layoutY="76.0" prefHeight="200.0" prefWidth="846.0">
+      <TableView fx:id="appointmentsTable" layoutX="60.0" layoutY="76.0" prefHeight="200.0" prefWidth="846.0">
         <columns>
           <TableColumn prefWidth="75.0" text="ID" />
           <TableColumn prefWidth="75.0" text="Title" />
@@ -46,7 +46,7 @@
       <Button layoutX="769.0" layoutY="553.0" mnemonicParsing="false" text="Update" />
       <Button layoutX="833.0" layoutY="553.0" mnemonicParsing="false" text="Delete" />
       <Button layoutX="717.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
-      <Button layoutX="769.0" layoutY="288.0" mnemonicParsing="false" text="Update" />
+      <Button layoutX="769.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickUpdateAppointment" text="Update" />
       <Button layoutX="833.0" layoutY="288.0" mnemonicParsing="false" text="Delete" />
       <RadioButton layoutX="650.0" layoutY="40.0" mnemonicParsing="false" text="All">
          <toggleGroup>
