@@ -1,5 +1,8 @@
 package DB;
 
+import Main.JDBC;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -8,6 +11,7 @@ import java.sql.SQLException;
 public class UsersSQL {
 
     public static boolean validLogin(String username, String password) throws SQLException {
-        String sql = "SELECT * FROM users WHERE User_Name = ?" + username + "'AND Password = ?" + password
+        String sql = "SELECT * FROM users WHERE User_name=? AND Password=?";
+        PreparedStatement statement = JDBC.getConnection()
     }
 }
