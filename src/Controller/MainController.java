@@ -29,7 +29,7 @@ public class MainController {
      * @throws IOException
      */
     public static void returnToMain(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(MainController.class.getResource("MainView.fxml"));
+        Parent root = FXMLLoader.load(MainController.class.getResource("/Views/MainView.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

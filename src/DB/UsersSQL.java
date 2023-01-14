@@ -18,23 +18,21 @@ public class UsersSQL {
      * @param password
      * @return
      */
-    public static boolean loginCheck(String username, String password) {
+    public static boolean validuserpass(String username, String password) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_name=? AND Password=?";
+        PreparedStatement statement = JDBC.getConnection().prepareStatement(sql);
 
-        try (Connection connection = JDBC.getConnection();
-            PreparedStatement statement = JDBC.getConnection().prepareStatement(sql)) {
-            statement.setString(1, username);
-            statement.setString(2, password);
+        statement.setString(1, username);
+        statement.setString(2, password);
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            System.err.println("Error: " + e);
+        try {
+            statement.execute();
+            ResultSet r = statement.getResultSet();
+            return (r.next());
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     /**
