@@ -1,7 +1,9 @@
 package Controller;
 
 import DB.AppointmentSQL;
+import DB.ContactSQL;
 import Model.Appointment;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -12,10 +14,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static Controller.MainController.returnToMain;
-import static DB.AppointmentSQL.appointmentByCustID;
+import static DB.AppointmentSQL.*;
+import static DB.ContactSQL.contactList;
+import static DB.CustomerSQL.customerList;
+import static DB.UsersSQL.getUsers;
 import static Main.helpers.alert;
 
 public class AppointmentsController {
@@ -87,6 +93,12 @@ public class AppointmentsController {
        return appointments.stream().anyMatch(appointment -> appointment.getAppointment_ID() != appointment_ID && appointment.getStart_time().isBefore(end) && (start.isBefore(appointment.getEnd_time())));
     }
 
+    /**
+     * Checks if fields are missing, appointments conflicting, and if the start and end times are valid before updating database
+     * @param event Click save button
+     * @throws IOException
+     * @throws SQLException
+     */
     public void ClickSaveButtonAppointment(ActionEvent event) throws IOException, SQLException {
         if (titleTextField.getText().isEmpty() ||
                 descriptionTextField.getText().isEmpty() ||
@@ -110,15 +122,57 @@ public class AppointmentsController {
             alert("There are conflicting appointment times");
             return;
         }
-        else
+        else if (AppointmentIDText.getText().isEmpty()) {
+            makeAppointmentForDB(titleTextField.getText(), typeTextField.getText(), descriptionTextField.getText(), locationTextField.getText(), LocalDateTime.of(AppointmentStartDatePick.getValue(), LocalTime.parse(AppointmentStartTimeBox.getSelectionModel().getSelectedItem().toString())), LocalDateTime.of(AppointmentEndDatePick.getValue(), LocalTime.parse(AppointmentEndTimeBox.getSelectionModel().getSelectedItem().toString())), OnlyIntAppointmentBox(customerBox), OnlyIntAppointmentBox(userBox), OnlyIntAppointmentBox(contactBox));
+        }
+        else try {
+                updateAppointmentInDB(titleTextField.getText(), typeTextField.getText(), descriptionTextField.getText(), locationTextField.getText(), LocalDateTime.of(AppointmentStartDatePick.getValue(), LocalTime.parse(AppointmentStartTimeBox.getSelectionModel().getSelectedItem().toString())), LocalDateTime.of(AppointmentEndDatePick.getValue(), LocalTime.parse(AppointmentEndTimeBox.getSelectionModel().getSelectedItem().toString())), OnlyIntAppointmentBox(customerBox), OnlyIntAppointmentBox(userBox), OnlyIntAppointmentBox(contactBox), Integer.parseInt(AppointmentIDText.getText()));
+            } catch (Exception exception) {
+            exception.printStackTrace();
+            }
+        returnToMain(event);
 
     }
 
     /**
-     *
+     * Lambda expressions used to iterate through contacts, users, and customers to create new lists containing ID and name. Also iterates through time ranges for observable list. Function sends appointment into the fields
      * @param appointment
      */
-    public void appointmentData(Appointment appointment) {
+    public void appointmentInfo(Appointment appointment) {
+        try {
+            ObservableList<String> con = contactList().stream().map(contact -> contact.getContact_ID() + ":" + contact.getContact_name()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+            contactBox.setItems(con);
+
+            ObservableList<String> cus = customerList().stream().map(customer -> customer.getCustomer_ID() + ":" + customer.getCustomer_Name()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+            customerBox.setItems(cus);
+
+            ObservableList<String> user = getUsers().stream().map(user1 -> user1.getUserID() + ":" + user1.getUserName()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+            userBox.setItems(user);
+
+            LocalTime start = LocalTime.of(8, 0);
+            LocalTime end = LocalTime.of(22, 0);
+
+            ObservableList<String> time = Stream.iterate(start, t->t.plusMinutes(5)).limit(end.toSecondOfDay() - start.toSecondOfDay()).map(Object::toString).collect(Collectors.toCollection(FXCollections::observableArrayList));
+            AppointmentStartTimeBox.setItems(time);
+            AppointmentEndTimeBox.setItems(time);
+
+            if (appointment != null) {
+                AppointmentIDText.setText(Integer.toString(appointment.getAppointment_ID()));
+                titleTextField.setText(appointment.getTitle());
+                typeTextField.setText(appointment.getType());
+                descriptionTextField.setText(appointment.getDescription());
+                locationTextField.setText(appointment.getLocation());
+                contactBox.setValue(appointment.getContact_ID());
+                AppointmentStartDatePick.setValue(appointment.getStart_date());
+                AppointmentStartTimeBox.setValue(appointment.getStart_time().toLocalTime());
+                AppointmentEndDatePick.setValue(appointment.getEnd_date());
+                AppointmentEndTimeBox.setValue(appointment.getEnd_time().toLocalTime());
+                customerBox.setValue(appointment.getCustomer_ID());
+                userBox.setValue(appointment.getUser_ID());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

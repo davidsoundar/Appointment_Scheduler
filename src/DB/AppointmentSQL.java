@@ -122,8 +122,8 @@ public class AppointmentSQL {
      * @return
      * @throws SQLException
      */
-    public static boolean makeAppointmentForDB(String title, String type, String description, String location, LocalDateTime start, LocalDateTime end, int customer_ID, int user_ID, String contact_name) throws SQLException {
-        String statement = "INSERT INTO appointments(Title, Description, Location, Contact_ID, Type, Start, End, Customer_ID, User_ID) VALUES (?,?,?,?,?,?,?,?,?)";
+    public static boolean makeAppointmentForDB(String title, String type, String description, String location, LocalDateTime start, LocalDateTime end, int customer_ID, int user_ID, int contact_name) throws SQLException {
+        String statement = "INSERT INTO appointments(Title, Type, Description, Location, Start, End, Customer_ID, User_ID) VALUES (?,?,?,?,?,?,?,?,?)";
 
         try (Connection connection = JDBC.getConnection();
              PreparedStatement s = connection.prepareStatement(statement)) {
@@ -134,8 +134,8 @@ public class AppointmentSQL {
             s.setTimestamp(5, Timestamp.valueOf(start));
             s.setTimestamp(6, Timestamp.valueOf(end));
             s.setInt(7, customer_ID);
-            s.setInt(8, customer_ID);
-            s.setString(9, contact_name);
+            s.setInt(8, user_ID);
+            s.setInt(9, contact_name);
             s.executeUpdate();
             return true;
         } catch (SQLException sqlExc) {
@@ -159,7 +159,7 @@ public class AppointmentSQL {
      * @return
      * @throws SQLException
      */
-    public static boolean updateAppointmentInDB(String title, String type, String description, String location, LocalDateTime start, LocalDateTime end, int customer_ID, int user_ID, String contact_name, int appointment_ID) throws SQLException {
+    public static boolean updateAppointmentInDB(String title, String type, String description, String location, LocalDateTime start, LocalDateTime end, int customer_ID, int user_ID, int contact_name, int appointment_ID) throws SQLException {
         String statement = "UPDATE appointments SET Title = ?, Type=?, Description =?, Location=?, Contact_ID=?, Start=?, End=?, Customer_ID=?, User_ID=? WHERE Appointment_ID=?; ";
 
         try (Connection connection = JDBC.getConnection();
@@ -172,7 +172,7 @@ public class AppointmentSQL {
             s.setTimestamp(6, Timestamp.valueOf(end));
             s.setInt(7, customer_ID);
             s.setInt(8, customer_ID);
-            s.setString(9, contact_name);
+            s.setInt(9, contact_name);
             s.setInt(10, appointment_ID);
             s.executeUpdate();
             return true;

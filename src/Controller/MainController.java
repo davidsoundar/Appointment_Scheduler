@@ -43,7 +43,7 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader((getClass()).getResource("Appointment.fxml"));
             Parent root = loader.load();
             AppointmentsController appointmentsController = loader.getController();
-            appointmentsController.appointmentData(appointment);
+            appointmentsController.appointmentInfo(appointment);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
