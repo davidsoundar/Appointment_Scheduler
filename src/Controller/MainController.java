@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 
+import static Main.helpers.alert;
+
 
 /**
  * Controller for the main screen
@@ -40,12 +42,14 @@ public class MainController {
         if (appointment != null) {
             FXMLLoader loader = new FXMLLoader((getClass()).getResource("Appointment.fxml"));
             Parent root = loader.load();
-            AppointmentsController controller = loader.getController();
-            controller.appointmentData(appointment);
+            AppointmentsController appointmentsController = loader.getController();
+            appointmentsController.appointmentData(appointment);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-
+        }
+        else {
+            alert("Select an appointment");
         }
     }
 }
