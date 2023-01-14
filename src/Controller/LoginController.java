@@ -23,7 +23,7 @@ import static Controller.MainController.returnToMain;
 import static DB.UsersSQL.validuserpass;
 import static Main.helpers.alert;
 
-public class LoginController implements Initializable{
+public class LoginController {
 
     public Label LoginLocation;
     public Label InfoLabel;
@@ -33,9 +33,18 @@ public class LoginController implements Initializable{
     public Label Location;
     public TextField usernameLoginText;
     public TextField PasswordLoginText;
+
     private ResourceBundle res = ResourceBundle.getBundle("lang/lang", Locale.getDefault());
 
-
+    /**
+     * Changes the language of the login screen
+     */
+    public void initialize() {
+        LoginLocation.setText(String.valueOf(ZoneId.of(TimeZone.getDefault().getID())));
+        loginButton.setText(res.getString("login"));
+        usernameLogin.setText(res.getString("username"));
+        PasswordLogin.setText(res.getString("password"));
+    }
 
     public Boolean missing() {
         if (usernameLoginText.getText().isEmpty() || PasswordLoginText.getText().isEmpty()) {
@@ -72,15 +81,6 @@ public class LoginController implements Initializable{
         }
     }
 
-    /**
-     * Changes the language of the login screen
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-            LoginLocation.setText(String.valueOf(ZoneId.of(TimeZone.getDefault().getID())));
-            loginButton.setText(res.getString("login"));
-            usernameLogin.setText(res.getString("username"));
-            PasswordLogin.setText(res.getString("password"));
-        }
+
     }
 

@@ -18,16 +18,16 @@
       </Label>
       <TableView fx:id="appointmentsTable" layoutX="60.0" layoutY="76.0" prefHeight="200.0" prefWidth="846.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="75.0" text="Title" />
-            <TableColumn prefWidth="75.0" text="Type" />
-            <TableColumn prefWidth="75.0" text="Description" />
-            <TableColumn prefWidth="75.0" text="Location" />
-            <TableColumn prefWidth="107.0" text="Start Date/Time" />
-            <TableColumn prefWidth="108.0" text="End Date/Time" />
-            <TableColumn prefWidth="84.0" text="Customer ID" />
-            <TableColumn prefWidth="65.0" text="User ID" />
-            <TableColumn prefWidth="106.0" text="Contact Name" />
+          <TableColumn fx:id="MainAppointmentIDCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="MainAppointmentTitleCol" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="MainAppointmentTypeCol" prefWidth="75.0" text="Type" />
+            <TableColumn fx:id="MainAppointmentDescriptionCol" prefWidth="75.0" text="Description" />
+            <TableColumn fx:id="MainAppointmentLocationCol" prefWidth="75.0" text="Location" />
+            <TableColumn fx:id="MainAppointmentStartCol" prefWidth="107.0" text="Start Date/Time" />
+            <TableColumn fx:id="MainAppointmentEndCol" prefWidth="108.0" text="End Date/Time" />
+            <TableColumn fx:id="MainAppointmentCustomerCol" prefWidth="84.0" text="Customer ID" />
+            <TableColumn fx:id="MainAppointmentUserCol" prefWidth="65.0" text="User ID" />
+            <TableColumn fx:id="MainAppointmentContactCol" prefWidth="106.0" text="Contact Name" />
         </columns>
       </TableView>
       <TableView layoutX="60.0" layoutY="344.0" prefHeight="200.0" prefWidth="846.0">
