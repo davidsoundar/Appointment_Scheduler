@@ -15,6 +15,9 @@ import java.sql.SQLException;
 
 import static Controller.MainController.returnToMain;
 import static DB.CountrySQL.countryList;
+import static DB.CustomerSQL.CustSQLNew;
+import static DB.CustomerSQL.CustSQLUpdate;
+import static Main.helpers.alert;
 
 
 public class CustomerController {
@@ -60,11 +63,32 @@ public class CustomerController {
     }
 
     /**
+     * Makes sure division box has only integers
+     * @return
+     */
+    public String onlyInt() {
+        String string = CustomerDivisionBox.getValue();
+        return string.replaceAll("\\D+", "");
+    }
+
+    /**
      * Saves updates or adds new customers when save buttcn is clicked
      * @param event save button clicked
      */
-    public void ClickCustomerSaveButton(ActionEvent event) {
-
+    public void ClickCustomerSaveButton(ActionEvent event) throws SQLException, IOException {
+        if (CustomerNameText.getText().isEmpty() || CustomerAddressText.getText().isEmpty()
+                || CustomerPostalText.getText().isEmpty() || CustomerPhoneText.getText().isEmpty() || CustomerCountryBox.getValue().isEmpty()) {
+            alert("Missing customer field");
+        }
+        else if (CustomerIDText.getText().isEmpty()) {
+            CustSQLNew(CustomerNameText.getText(), CustomerAddressText.getText(), CustomerPostalText.getText(), CustomerPhoneText.getText(), onlyInt());
+        }
+        else try {
+                CustSQLUpdate(Integer.parseInt(CustomerIDText.getText()), CustomerNameText.getText(), CustomerAddressText.getText(), CustomerPostalText.getText(), CustomerPhoneText.getText(), onlyInt());
+            } catch (SQLException sqlexc) {
+            sqlexc.printStackTrace();
+            }
+        returnToMain(event);
     }
 
     /**

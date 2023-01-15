@@ -127,7 +127,7 @@ public class AppointmentSQL {
      * @throws SQLException
      */
     public static boolean makeAppointmentForDB(String title, String type, String description, String location, LocalDateTime start, LocalDateTime end, int customer_ID, int user_ID, int contact_name) throws SQLException {
-        String statement = "INSERT INTO appointments(Title, Type, Description, Location, Start, End, Customer_ID, User_ID) VALUES (?,?,?,?,?,?,?,?,?)";
+        String statement = "INSERT INTO appointments(Title, Type, Description, Location, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?)";
 
         try {
             Connection connection = JDBC.getConnection();
@@ -142,8 +142,7 @@ public class AppointmentSQL {
                 s.setInt(7, customer_ID);
                 s.setInt(8, user_ID);
                 s.setInt(9, contact_name);
-                s.executeUpdate();
-                return true;
+                s.execute();
         }catch (SQLException sqlExc) {
             sqlExc.printStackTrace();
         }

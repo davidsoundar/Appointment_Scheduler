@@ -79,7 +79,7 @@ public class CustomerSQL {
      * @return
      * @throws SQLException
      */
-    public static boolean addCustomer(String name, String address, String postal, String phone, String divisionID) throws SQLException {
+    public static boolean CustSQLNew(String name, String address, String postal, String phone, String divisionID) throws SQLException {
         String sql = "INSERT INTO customers(Customer_Name. Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
 
         try {
@@ -110,7 +110,7 @@ public class CustomerSQL {
      * @return
      * @throws SQLException
      */
-    public static boolean updateCustomer(int customerID, String name, String address, String postal, String phone, String divisionID) throws SQLException {
+    public static boolean CustSQLUpdate(int customerID, String name, String address, String postal, String phone, String divisionID) throws SQLException {
         Connection connection = JDBC.getConnection();
         String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Division_ID=?, WHERE Customer_ID=?";
 

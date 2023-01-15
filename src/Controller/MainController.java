@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Appointment;
 import Model.Customer;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,6 +52,7 @@ public class MainController {
     public RadioButton MainAll;
     public RadioButton MainWeek;
     public RadioButton MainMonth;
+    public ObservableList<Appointment> q;
 
     public void initialize() {
         appointmentsTable.setItems(makeAppointmentListForMain(1));
@@ -156,14 +158,15 @@ public class MainController {
 
     public void tg1() {
         if (MainAll.isSelected()) {
-            appointmentsTable.setItems(makeAppointmentListForMain(1));
+            q = makeAppointmentListForMain(1);
         }
         if (MainWeek.isSelected()) {
-            appointmentsTable.setItems(makeAppointmentListForMain(2));
+            q = makeAppointmentListForMain(2);
         }
-        if (MainWeek.isSelected()) {
-            appointmentsTable.setItems(makeAppointmentListForMain(3));
+        if (MainMonth.isSelected()) {
+            q = makeAppointmentListForMain(3);
         }
+        appointmentsTable.setItems(q);
     }
 }
 

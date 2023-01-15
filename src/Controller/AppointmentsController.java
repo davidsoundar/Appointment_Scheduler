@@ -81,17 +81,18 @@ public class AppointmentsController {
      * @return true if conflicting
      */
    public boolean AppointmentConflict() throws SQLException {
-        LocalDateTime start = LocalDateTime.of(AppointmentStartDatePick.getValue(), LocalTime.parse(AppointmentStartTimeBox.getSelectionModel().getSelectedItem().toString()));
-        LocalDateTime end = LocalDateTime.of(AppointmentEndDatePick.getValue(), LocalTime.parse(AppointmentEndTimeBox.getSelectionModel().getSelectedItem().toString()));
+       LocalDateTime start = LocalDateTime.of(AppointmentStartDatePick.getValue(), LocalTime.parse(AppointmentStartTimeBox.getSelectionModel().getSelectedItem().toString()));
+       LocalDateTime end = LocalDateTime.of(AppointmentEndDatePick.getValue(), LocalTime.parse(AppointmentEndTimeBox.getSelectionModel().getSelectedItem().toString()));
 
-        int appointment_ID = ID();
+       int appointment_ID = ID();
        ObservableList<Appointment> appointments = appointmentByCustID(OnlyIntAppointmentBox(customerBox));
 
        if (appointments == null) {
            return false;
        }
-       return appointments.stream().anyMatch(appointment -> appointment.getAppointment_ID() != appointment_ID && appointment.getStart_time().isBefore(end) && (start.isBefore(appointment.getEnd_time())));
-    }
+       return appointments.stream().filter(appointment -> appointment.getAppointment_ID() != appointment_ID).anyMatch(appointment -> appointment.getStart_time().isBefore(end) && start.isBefore(appointment.getEnd_time()));
+
+   }
 
     /**
      * Checks if fields are missing, appointments conflicting, and if the start and end times are valid before updating database
