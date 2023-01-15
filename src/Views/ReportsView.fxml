@@ -6,20 +6,20 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
    <children>
-      <TableView fx:id="reports" layoutX="15.0" layoutY="86.0" prefHeight="300.0" prefWidth="571.0" />
+      <TableView fx:id="reports" layoutX="15.0" layoutY="86.0" prefHeight="286.0" prefWidth="550.0" />
       <Label layoutX="56.0" layoutY="40.0" text="Reports">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="310.0" layoutY="39.0" text="Sort:" />
-      <RadioButton fx:id="all" layoutX="367.0" layoutY="14.0" mnemonicParsing="false" text="All">
+      <Label layoutX="278.0" layoutY="39.0" text="Sort:" />
+      <RadioButton fx:id="byContact" layoutX="316.0" layoutY="14.0" mnemonicParsing="false" onAction="#selection" selected="true" text="Schedules for each Contact">
          <toggleGroup>
             <ToggleGroup fx:id="tg2" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="user" layoutX="367.0" layoutY="39.0" mnemonicParsing="false" text="By User" toggleGroup="$tg2" />
-      <RadioButton fx:id="type" layoutX="367.0" layoutY="64.0" mnemonicParsing="false" text="By Type" toggleGroup="$tg2" />
+      <RadioButton fx:id="byUser" layoutX="316.0" layoutY="39.0" mnemonicParsing="false" onAction="#selection" text="Count by User" toggleGroup="$tg2" />
+      <RadioButton fx:id="type" layoutX="315.0" layoutY="64.0" mnemonicParsing="false" onAction="#selection" text="Count by Type and Month" toggleGroup="$tg2" />
       <Button layoutX="517.0" layoutY="35.0" mnemonicParsing="false" onAction="#ClickBack" prefHeight="37.0" prefWidth="51.0" text="Back" />
    </children>
 </AnchorPane>

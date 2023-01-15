@@ -42,18 +42,21 @@
          </columns>
       </TableView>
       <Button layoutX="60.0" layoutY="553.0" mnemonicParsing="false" onAction="#ClickReports" prefHeight="40.0" prefWidth="79.0" text="Reports" />
-      <Button layoutX="717.0" layoutY="553.0" mnemonicParsing="false" text="Add" />
-      <Button layoutX="769.0" layoutY="553.0" mnemonicParsing="false" text="Update" />
-      <Button layoutX="833.0" layoutY="553.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="717.0" layoutY="553.0" mnemonicParsing="false" onAction="#ClickCustAddButton" text="Add" />
+      <Button layoutX="769.0" layoutY="553.0" mnemonicParsing="false" onAction="#ClickCustUpdateButton" text="Update" />
+      <Button layoutX="833.0" layoutY="553.0" mnemonicParsing="false" onAction="#ClickCustDeleteButton" text="Delete" />
       <Button layoutX="717.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickAddAppointmentButton" text="Add" />
       <Button layoutX="769.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickUpdateAppointmentButton" text="Update" />
       <Button layoutX="833.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickDeleteAppointmentButton" text="Delete" />
-      <RadioButton fx:id="MainAll" layoutX="650.0" layoutY="40.0" mnemonicParsing="false" text="All">
+      <RadioButton fx:id="MainAll" layoutX="650.0" layoutY="40.0" mnemonicParsing="false" onAction="#tg" selected="true" text="All">
          <toggleGroup>
             <ToggleGroup fx:id="tg1" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="MainWeek" layoutX="717.0" layoutY="40.0" mnemonicParsing="false" text="Week" toggleGroup="$tg1" />
-      <RadioButton fx:id="MainMonth" layoutX="796.0" layoutY="40.0" mnemonicParsing="false" text="Month" toggleGroup="$tg1" />
+      <RadioButton fx:id="MainWeek" layoutX="717.0" layoutY="40.0" mnemonicParsing="false" onAction="#tg" text="Week" toggleGroup="$tg1" />
+      <RadioButton fx:id="MainMonth" layoutX="796.0" layoutY="40.0" mnemonicParsing="false" onAction="#tg" text="Month" toggleGroup="$tg1" />
+      <Label layoutX="219.0" layoutY="300.0" prefHeight="17.0" prefWidth="142.0" text="Within next 15 minutes: " />
+      <Label layoutX="420.0" layoutY="300.0" />
+      <Label fx:id="immediate" layoutX="368.0" layoutY="280.0" prefHeight="58.0" prefWidth="319.0" />
    </children>
 </AnchorPane>

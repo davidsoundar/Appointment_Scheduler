@@ -4,8 +4,6 @@ import Main.JDBC;
 import Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,7 +78,7 @@ public class CustomerSQL {
      * @throws SQLException
      */
     public static boolean CustSQLNew(String name, String address, String postal, String phone, String divisionID) throws SQLException {
-        String sql = "INSERT INTO customers(Customer_Name. Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
 
         try {
             Connection connection = JDBC.getConnection();
@@ -90,7 +88,7 @@ public class CustomerSQL {
                 s.setString(3, postal);
                 s.setString(4, phone);
                 s.setInt(5, Integer.parseInt(divisionID));
-                s.executeUpdate();
+                s.execute();
                 return true;
         } catch (Exception exc) {
             exc.printStackTrace();
@@ -112,7 +110,7 @@ public class CustomerSQL {
      */
     public static boolean CustSQLUpdate(int customerID, String name, String address, String postal, String phone, String divisionID) throws SQLException {
         Connection connection = JDBC.getConnection();
-        String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Division_ID=?, WHERE Customer_ID=?";
+        String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Division_ID=? WHERE Customer_ID=?";
 
         PreparedStatement s = connection.prepareStatement(sql);
         s.setString(1, name);
@@ -132,14 +130,14 @@ public class CustomerSQL {
      * @return boolean
      * @throws SQLException
      */
-    public static boolean deleteCustomer(int customerID) throws SQLException {
+    public static boolean CustRemoveSQL(int customerID) throws SQLException {
         String sql = "DELETE FROM customers WHERE Customer_ID=?;";
 
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(sql);
                 s.setInt(1, customerID);
-                s.executeUpdate();
+                s.execute();
 
                 return true;
 

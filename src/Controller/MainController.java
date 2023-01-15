@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Appointment;
 import Model.Customer;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,15 +13,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static DB.AppointmentSQL.deleteAppointmentFromDB;
-import static DB.AppointmentSQL.makeAppointmentListForMain;
-import static DB.CustomerSQL.customersData;
+import static DB.AppointmentSQL.*;
+import static DB.CustomerSQL.*;
 import static Main.helpers.alert;
 import static javafx.fxml.FXMLLoader.load;
 
@@ -52,7 +50,7 @@ public class MainController {
     public RadioButton MainAll;
     public RadioButton MainWeek;
     public RadioButton MainMonth;
-    public ObservableList<Appointment> q;
+    public Label immediate;
 
     public void initialize() {
         appointmentsTable.setItems(makeAppointmentListForMain(1));
@@ -76,11 +74,21 @@ public class MainController {
         MainCustomerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
         MainCustomerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
 
+        ObservableList<Appointment> a = FXCollections.observableArrayList();
+        ObservableList<Appointment> fifteenMinutes = FifteenMinutes();
 
-    }
+        if (fifteenMinutes != null) {
+            for (Appointment appt : fifteenMinutes) {
+                a.add(appt);
+                String s = "Appointment ID - " + appt.getAppointment_ID() + "\nDate-  " + appt.getStart_date() + "\nTime- " + appt.getStart_time().toLocalTime();
+                immediate.setText(s);
+            }
+        }
+        }
 
     /**
      * public function to return to the main screen
+     *
      * @param actionEvent button click
      * @throws IOException
      */
@@ -94,6 +102,7 @@ public class MainController {
 
     /**
      * Function to go to the appointment view when update appointment is clicked
+     *
      * @param event clicking update appointment
      * @throws IOException
      */
@@ -108,37 +117,43 @@ public class MainController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-        }
-        else {
+        } else {
             alert("Select an appointment");
         }
-
     }
 
+    /**
+     * Clicking add appointment takes user to appointment view
+     * @param event add click
+     * @throws IOException
+     */
     public void ClickAddAppointmentButton(ActionEvent event) throws IOException {
         Appointment appointment = null;
-            FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/AppointmentsView.fxml"));
-            Parent root = loader.load();
-            AppointmentsController appointmentsController = loader.getController();
-            appointmentsController.appointmentInfo(appointment);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+        FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/AppointmentsView.fxml"));
+        Parent root = loader.load();
+        AppointmentsController appointmentsController = loader.getController();
+        appointmentsController.appointmentInfo(appointment);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
+    /**
+     * Deletes appointment if selected
+     * @param event click delete
+     */
     public void ClickDeleteAppointmentButton(ActionEvent event) {
         Appointment appt = appointmentsTable.getSelectionModel().getSelectedItem();
         if (appt != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Delete appointment " + appt.getAppointment_ID() + "?");
+            alert.setContentText("Delete appointment " + appt.getAppointment_ID() +"?\nType: " + appt.getType());
             Optional<ButtonType> confirm = alert.showAndWait();
 
             if (confirm.get() == ButtonType.OK) {
                 deleteAppointmentFromDB(appt.getAppointment_ID());
                 appointmentsTable.setItems(makeAppointmentListForMain(1));
             }
-        }
-        else {
+        } else {
             alert("Select Appointment");
         }
     }
@@ -146,6 +161,7 @@ public class MainController {
 
     /**
      * Function to go to the reports view when reports button is clicked
+     *
      * @param event reports button clicked
      * @throws IOException
      */
@@ -156,17 +172,78 @@ public class MainController {
         stage.show();
     }
 
-    public void tg1() {
+    public void tg() {
         if (MainAll.isSelected()) {
-            q = makeAppointmentListForMain(1);
+            appointmentsTable.setItems(makeAppointmentListForMain(1));
         }
         if (MainWeek.isSelected()) {
-            q = makeAppointmentListForMain(2);
+            appointmentsTable.setItems(makeAppointmentListForMain(2));
         }
         if (MainMonth.isSelected()) {
-            q = makeAppointmentListForMain(3);
+            appointmentsTable.setItems(makeAppointmentListForMain(3));
         }
-        appointmentsTable.setItems(q);
+
+    }
+
+    /**
+     * Function to make clicking Add Customer button go to customer view
+     *
+     * @param event add click
+     * @throws IOException
+     * @throws SQLException
+     */
+    public void ClickCustAddButton(ActionEvent event) throws IOException, SQLException {
+        Customer c = null;
+        FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/CustomerView.fxml"));
+        Parent root = loader.load();
+        CustomerController customerController = loader.getController();
+        customerController.CustomerInfo(c);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    /**
+     * If a customer is selected will go to customer view. also sends data
+     *
+     * @param event update customer click
+     */
+    public void ClickCustUpdateButton(ActionEvent event) throws IOException {
+        Customer c = customersTable.getSelectionModel().getSelectedItem();
+        if (c != null) {
+            FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/CustomerView.fxml"));
+            Parent root = loader.load();
+            CustomerController customerController = loader.getController();
+            customerController.CustomerInfo(c);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } else {
+            alert("Select a customer");
+        }
+    }
+
+    /**
+     * Deletes customer and their appointments
+     *
+     * @param event
+     */
+    public void ClickCustDeleteButton(ActionEvent event) throws SQLException {
+        Customer c = customersTable.getSelectionModel().getSelectedItem();
+
+        if (c != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Delete customer " + c.getCustomer_Name() + " and their appointments?");
+            Optional<ButtonType> confirm = alert.showAndWait();
+
+            if (confirm.get() == ButtonType.OK) {
+                CustRemoveSQL(c.getCustomer_ID());
+                customersTable.setItems(customersData());
+                appointmentsTable.setItems(makeAppointmentListForMain(1));
+            }
+        } else {
+            alert("Select a Customer");
+        }
     }
 }
 

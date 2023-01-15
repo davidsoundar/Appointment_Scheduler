@@ -28,13 +28,14 @@ public class LoginController {
     public Label LoginLocation;
     public Label InfoLabel;
     public Button loginButton;
-    public Label usernameLogin;
-    public Label PasswordLogin;
+    public Label userLogin;
+    public Label PassLogin;
     public Label Location;
     public TextField usernameLoginText;
     public TextField PasswordLoginText;
 
-    private ResourceBundle res = ResourceBundle.getBundle("lang/lang", Locale.getDefault());
+    private final ResourceBundle res = ResourceBundle.getBundle("lang/lang", Locale.getDefault());
+    public Label Login2;
 
     /**
      * Changes the language of the login screen
@@ -42,11 +43,16 @@ public class LoginController {
     public void initialize() {
         LoginLocation.setText(String.valueOf(ZoneId.of(TimeZone.getDefault().getID())));
         loginButton.setText(res.getString("login"));
-        usernameLogin.setText(res.getString("username"));
-        PasswordLogin.setText(res.getString("password"));
+        userLogin.setText(res.getString("username"));
+        PassLogin.setText(res.getString("password"));
+        Login2.setText(res.getString("login2"));
     }
 
-    public Boolean missing() {
+    /**
+     * Checks if username or password is missing
+     * @return bool
+     */
+    public Boolean notMissing() {
         if (usernameLoginText.getText().isEmpty() || PasswordLoginText.getText().isEmpty()) {
             InfoLabel.setText(res.getString("missing"));
             return false;
@@ -57,7 +63,7 @@ public class LoginController {
 
     public void ClickLoginButton(ActionEvent event) throws IOException, SQLException {
 
-        if (!missing()) return;
+        if (!notMissing()) return;
         boolean check = validuserpass(usernameLoginText.getText(), PasswordLoginText.getText());
         if (check) {
             validuserpass(usernameLoginText.getText(), PasswordLoginText.getText());

@@ -16,6 +16,7 @@ public class AppointmentSQL {
 
     /**
      * Function to make the appointment list based on all, week, or month
+     *
      * @param i 1=ALl. 2=by week. 3 = by month
      * @return observable appointment list
      */
@@ -28,11 +29,12 @@ public class AppointmentSQL {
             sql = "SELECT * FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE week(Start)=week(now());";
         }
         if (i == 3) {
-            sql = "SELECT * FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE month(Start)=month(now());;";
+            sql = "SELECT * FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE month(Start)=month(now());";
         }
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-        try {Connection conn = JDBC.getConnection();
+        try {
+            Connection conn = JDBC.getConnection();
             Statement st = conn.createStatement();
             ResultSet r = st.executeQuery(sql);
             while (r.next()) {
@@ -63,6 +65,7 @@ public class AppointmentSQL {
 
     /**
      * delete appointment from database
+     *
      * @param appointmentID int
      * @return boolean
      */
@@ -72,9 +75,9 @@ public class AppointmentSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(sql);
-                s.setInt(1, appointmentID);
-                s.execute();
-                return true;
+            s.setInt(1, appointmentID);
+            s.execute();
+            return true;
         } catch (SQLException sqlexc) {
             sqlexc.printStackTrace();
         }
@@ -83,6 +86,7 @@ public class AppointmentSQL {
 
     /**
      * Function to make appointment list by customer ID
+     *
      * @param customerID
      * @return observable appointment list
      * @throws SQLException
@@ -92,20 +96,20 @@ public class AppointmentSQL {
             Connection connection = JDBC.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT a.*, c.Contact_Name FROM appointments a JOIN contacts c ON a.Contact_ID=c.Contact_ID WHERE a.Customer_ID=?");
 
-                statement.setInt(1, customerID);
-                ResultSet r = statement.executeQuery();
-                ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+            statement.setInt(1, customerID);
+            ResultSet r = statement.executeQuery();
+            ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-                while (r.next()) {
-                    appointments.add(new Appointment(r.getInt("Appointment_ID"), r.getString("Title"),
-                            r.getString("Type"), r.getString("Description"), r.getString("Location"),
-                            r.getDate("Start").toLocalDate(), r.getTimestamp("Start").toLocalDateTime(),
-                            r.getDate("End").toLocalDate(), r.getTimestamp("End").toLocalDateTime(),
-                            r.getInt("Customer_ID"), r.getInt("User_ID"), r.getString("Contact_Name"), r.getInt("Contact_ID")));
+            while (r.next()) {
+                appointments.add(new Appointment(r.getInt("Appointment_ID"), r.getString("Title"),
+                        r.getString("Type"), r.getString("Description"), r.getString("Location"),
+                        r.getDate("Start").toLocalDate(), r.getTimestamp("Start").toLocalDateTime(),
+                        r.getDate("End").toLocalDate(), r.getTimestamp("End").toLocalDateTime(),
+                        r.getInt("Customer_ID"), r.getInt("User_ID"), r.getString("Contact_Name"), r.getInt("Contact_ID")));
 
-                }
-                return appointments;
-        }catch (SQLException exception) {
+            }
+            return appointments;
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return null;
@@ -114,6 +118,7 @@ public class AppointmentSQL {
 
     /**
      * Makes an appointment for the database
+     *
      * @param title
      * @param type
      * @param description
@@ -133,17 +138,17 @@ public class AppointmentSQL {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(statement);
 
-                s.setString(1, title);
-                s.setString(2, type);
-                s.setString(3, description);
-                s.setString(4, location);
-                s.setTimestamp(5, Timestamp.valueOf(start));
-                s.setTimestamp(6, Timestamp.valueOf(end));
-                s.setInt(7, customer_ID);
-                s.setInt(8, user_ID);
-                s.setInt(9, contact_name);
-                s.execute();
-        }catch (SQLException sqlExc) {
+            s.setString(1, title);
+            s.setString(2, type);
+            s.setString(3, description);
+            s.setString(4, location);
+            s.setTimestamp(5, Timestamp.valueOf(start));
+            s.setTimestamp(6, Timestamp.valueOf(end));
+            s.setInt(7, customer_ID);
+            s.setInt(8, user_ID);
+            s.setInt(9, contact_name);
+            s.execute();
+        } catch (SQLException sqlExc) {
             sqlExc.printStackTrace();
         }
         return false;
@@ -151,6 +156,7 @@ public class AppointmentSQL {
 
     /**
      * Function to update/modify appointments in the database
+     *
      * @param title
      * @param type
      * @param description
@@ -169,21 +175,46 @@ public class AppointmentSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(statement);
-                s.setString(1, title);
-                s.setString(2, type);
-                s.setString(3, description);
-                s.setString(4, location);
-                s.setTimestamp(5, Timestamp.valueOf(start));
-                s.setTimestamp(6, Timestamp.valueOf(end));
-                s.setInt(7, customer_ID);
-                s.setInt(8, user_ID);
-                s.setInt(9, contact_name);
-                s.setInt(10, appointment_ID);
-                s.execute();
-                return true;
-        }catch (SQLException sqlExc) {
+            s.setString(1, title);
+            s.setString(2, type);
+            s.setString(3, description);
+            s.setString(4, location);
+            s.setTimestamp(5, Timestamp.valueOf(start));
+            s.setTimestamp(6, Timestamp.valueOf(end));
+            s.setInt(7, customer_ID);
+            s.setInt(8, user_ID);
+            s.setInt(9, contact_name);
+            s.setInt(10, appointment_ID);
+            s.execute();
+            return true;
+        } catch (SQLException sqlExc) {
             sqlExc.printStackTrace();
         }
         return false;
     }
+
+    /**
+     * Function to find appointments that start within 15 minutes from now
+     *
+     * @return observable list of appointments starting withing 15 minutes
+     */
+    public static ObservableList<Appointment> FifteenMinutes() {
+        String statement = "SELECT Appointment_ID, Start FROM appointments WHERE appointments.start >= now() and appointments.start <= date_add(now(), interval 15 minute);";
+        ObservableList<Appointment> appts = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = JDBC.getConnection();
+            ResultSet s = connection.createStatement().executeQuery(statement);
+            while (s.next()) {
+                Appointment a = new Appointment(s.getInt("Appointment_ID"), s.getDate("Start").toLocalDate(), s.getTimestamp("Start").toLocalDateTime());
+
+                appts.add(a);
+            }
+            return appts;
+        } catch (SQLException sqlExc) {
+            sqlExc.printStackTrace();
+        }
+        return null;
+    }
 }
+

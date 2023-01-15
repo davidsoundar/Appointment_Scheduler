@@ -14,13 +14,13 @@
    <children>
       <AnchorPane prefHeight="170.0" prefWidth="278.0">
          <children>
-            <Label fx:id="usernameLogin" layoutX="27.0" layoutY="39.0" text="Username" />
-            <Label layoutX="119.0" layoutY="6.0" text="Login">
+            <Label fx:id="userLogin" layoutX="27.0" layoutY="39.0" text="Username" />
+            <Label fx:id="Login2" layoutX="119.0" layoutY="6.0" text="Login">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="PasswordLogin" layoutX="29.0" layoutY="71.0" text="Password" />
+            <Label fx:id="PassLogin" layoutX="29.0" layoutY="71.0" text="Password" />
             <TextField fx:id="usernameLoginText" layoutX="103.0" layoutY="35.0" />
             <TextField fx:id="PasswordLoginText" layoutX="103.0" layoutY="67.0" />
             <Label fx:id="Location" layoutX="27.0" layoutY="105.0" text="Location" />

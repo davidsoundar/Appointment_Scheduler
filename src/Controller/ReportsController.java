@@ -24,12 +24,13 @@ import static Controller.MainController.returnToMain;
 
 public class ReportsController {
 
-    public RadioButton user;
     public RadioButton type;
-    public RadioButton all;
     public String q;
     public ObservableList info;
     public TableView reports;
+    public RadioButton byContact;
+    public RadioButton byUser;
+
 
     public void initialize() {
         selection();
@@ -39,18 +40,17 @@ public class ReportsController {
         if (type.isSelected()) {
             q = ("SELECT Type, MONTHNAME(Start) as Month, count(*) AS Count FROM appointments GROUP BY Type, MONTHNAME(start) ORDER BY Type;");
         }
-        else if (user.isSelected()) {
-            q = ("SELECT users.User_Name. contact.Contact_Name, appointments.Appointment_ID, appointments.Title, appointments.Type, appointments.Description, CONVERT_TZ(start, '+00:00', 'system') AS Start, CONVERT_TZ(end, '+00:00', 'system') AS End, appointments.Customer_ID FROM appointments, contacts, users WHERE appointments.Contact_ID = contacts.Contact_ID order by User_Name;");
+        else if (byContact.isSelected()) {
+            q = ("SELECT c.Contact_Name, a.Appointment_ID, a.Title, a.Type, a.Description, CONVERT_TZ(start, '+00:00', 'system') AS Start, CONVERT_TZ(end, '+00:00', 'system') AS End, a.Customer_ID FROM appointments a, contacts c WHERE a.Contact_ID = c.Contact_ID order by Contact_Name");
         }
-        else if (all.isSelected()) {
-            q = ("SELECT contacts.Contact_Name, appointments.Appointment_ID, appointments.Title, appointments.Type, appointments.Description, CONVERT_TZ(start, '+00:00', 'system') AS Start, CONVERT_TZ(end, '00:00', 'system') AS End, appointments.Customer_ID FROM appointments, contacts WHERE appointments.Contact_ID = contacts.Contact_ID ORDER BY Contact_Name;");
+        else if (byUser.isSelected()) {
+            q = ("SELECT User_ID,  count(*) AS Count FROM appointments GROUP BY User_ID");
         }
-        report();
+        tables();
     }
 
 
-
-    public void report() {
+    public void tables() {
         info = FXCollections.observableArrayList();
         reports.getColumns().clear();
         try {

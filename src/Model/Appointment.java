@@ -37,6 +37,12 @@ public class Appointment {
         this.contact_ID = contact_ID;
     }
 
+    public Appointment(int appointment_ID, LocalDate start, LocalDateTime start_time) {
+        this.appointment_ID = appointment_ID;
+        this.start_date = start;
+        this.start_time = start_time;
+    }
+
     /**
      * appointment ID getter
      * @return appointment ID
