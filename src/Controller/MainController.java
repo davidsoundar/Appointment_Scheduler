@@ -8,15 +8,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
+import static DB.AppointmentSQL.deleteAppointmentFromDB;
 import static DB.AppointmentSQL.makeAppointmentListForMain;
 import static DB.CustomerSQL.customersData;
 import static Main.helpers.alert;
@@ -47,8 +48,10 @@ public class MainController {
     public TableColumn MainCustomerDivisionCol;
     public TableColumn MainCustomerPhoneCol;
     public TableView<Customer> customersTable;
+    public RadioButton MainAll;
+    public RadioButton MainWeek;
+    public RadioButton MainMonth;
 
-    @FXML
     public void initialize() {
         appointmentsTable.setItems(makeAppointmentListForMain(1));
         MainAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("appointment_ID"));
@@ -93,7 +96,7 @@ public class MainController {
      * @throws IOException
      */
     @FXML
-    void ClickUpdateAppointment(ActionEvent event) throws IOException {
+    void ClickUpdateAppointmentButton(ActionEvent event) throws IOException {
         Appointment appointment = appointmentsTable.getSelectionModel().getSelectedItem();
         if (appointment != null) {
             FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/AppointmentsView.fxml"));
@@ -107,7 +110,37 @@ public class MainController {
         else {
             alert("Select an appointment");
         }
+
     }
+
+    public void ClickAddAppointmentButton(ActionEvent event) throws IOException {
+        Appointment appointment = null;
+            FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/AppointmentsView.fxml"));
+            Parent root = loader.load();
+            AppointmentsController appointmentsController = loader.getController();
+            appointmentsController.appointmentInfo(appointment);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+    }
+
+    public void ClickDeleteAppointmentButton(ActionEvent event) {
+        Appointment appt = appointmentsTable.getSelectionModel().getSelectedItem();
+        if (appt != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Delete appointment " + appt.getAppointment_ID() + "?");
+            Optional<ButtonType> confirm = alert.showAndWait();
+
+            if (confirm.get() == ButtonType.OK) {
+                deleteAppointmentFromDB(appt.getAppointment_ID());
+                appointmentsTable.setItems(makeAppointmentListForMain(1));
+            }
+        }
+        else {
+            alert("Select Appointment");
+        }
+    }
+
 
     /**
      * Function to go to the reports view when reports button is clicked
@@ -119,6 +152,18 @@ public class MainController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    public void tg1() {
+        if (MainAll.isSelected()) {
+            appointmentsTable.setItems(makeAppointmentListForMain(1));
+        }
+        if (MainWeek.isSelected()) {
+            appointmentsTable.setItems(makeAppointmentListForMain(2));
+        }
+        if (MainWeek.isSelected()) {
+            appointmentsTable.setItems(makeAppointmentListForMain(3));
+        }
     }
 }
 

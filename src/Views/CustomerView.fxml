@@ -33,16 +33,16 @@
             <Label text="Country" GridPane.rowIndex="4" />
             <Label text="Phone" GridPane.rowIndex="5" />
             <Label text="Division" GridPane.rowIndex="6" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField editable="false" GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="CustomerCountryBox" onAction="#ClickCustomerCountryBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="CustomerDivisionBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="CustomerPhoneText" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="CustomerPostalText" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="CustomerAddressText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="CustomerIDText" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="CustomerNameText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button layoutX="173.0" layoutY="352.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="233.0" layoutY="352.0" mnemonicParsing="false" text="Cancel" />
+      <Button layoutX="173.0" layoutY="352.0" mnemonicParsing="false" onAction="#ClickCustomerSaveButton" text="Save" />
+      <Button layoutX="233.0" layoutY="352.0" mnemonicParsing="false" onAction="#ClickCustomerCancelButton" text="Cancel" />
    </children>
 </AnchorPane>

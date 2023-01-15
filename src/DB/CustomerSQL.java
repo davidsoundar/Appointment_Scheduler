@@ -85,7 +85,6 @@ public class CustomerSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(sql);
-            {
                 s.setString(1, name);
                 s.setString(2, address);
                 s.setString(3, postal);
@@ -93,7 +92,6 @@ public class CustomerSQL {
                 s.setInt(5, Integer.parseInt(divisionID));
                 s.executeUpdate();
                 return true;
-            }
         } catch (Exception exc) {
             exc.printStackTrace();
         }
@@ -140,12 +138,11 @@ public class CustomerSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(sql);
-            {
                 s.setInt(1, customerID);
                 s.executeUpdate();
 
                 return true;
-            }
+
         } catch (SQLException sqlexc) {
             sqlexc.printStackTrace();
         }

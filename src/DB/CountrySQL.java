@@ -23,14 +23,11 @@ public class CountrySQL {
             Connection connection = JDBC.getConnection();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
-            {
-
                 while (result.next()) {
                     Country country = new Country(result.getInt("Country_ID"), result.getString("Country"));
                     countries.add(country);
                 }
                 return countries;
-            }
         }
         catch (SQLException exception) {
             exception.printStackTrace();

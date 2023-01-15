@@ -41,19 +41,19 @@
             <TableColumn fx:id="MainCustomerDivisionCol" prefWidth="171.0" text="Division" />
          </columns>
       </TableView>
-      <Button layoutX="60.0" layoutY="553.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" text="Reports" />
+      <Button layoutX="60.0" layoutY="553.0" mnemonicParsing="false" onAction="#ClickReports" prefHeight="40.0" prefWidth="79.0" text="Reports" />
       <Button layoutX="717.0" layoutY="553.0" mnemonicParsing="false" text="Add" />
       <Button layoutX="769.0" layoutY="553.0" mnemonicParsing="false" text="Update" />
       <Button layoutX="833.0" layoutY="553.0" mnemonicParsing="false" text="Delete" />
-      <Button layoutX="717.0" layoutY="288.0" mnemonicParsing="false" text="Add" />
-      <Button layoutX="769.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickUpdateAppointment" text="Update" />
-      <Button layoutX="833.0" layoutY="288.0" mnemonicParsing="false" text="Delete" />
-      <RadioButton layoutX="650.0" layoutY="40.0" mnemonicParsing="false" text="All">
+      <Button layoutX="717.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickAddAppointmentButton" text="Add" />
+      <Button layoutX="769.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickUpdateAppointmentButton" text="Update" />
+      <Button layoutX="833.0" layoutY="288.0" mnemonicParsing="false" onAction="#ClickDeleteAppointmentButton" text="Delete" />
+      <RadioButton fx:id="MainAll" layoutX="650.0" layoutY="40.0" mnemonicParsing="false" text="All">
          <toggleGroup>
             <ToggleGroup fx:id="tg1" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="717.0" layoutY="40.0" mnemonicParsing="false" text="Week" toggleGroup="$tg1" />
-      <RadioButton layoutX="796.0" layoutY="40.0" mnemonicParsing="false" text="Month" toggleGroup="$tg1" />
+      <RadioButton fx:id="MainWeek" layoutX="717.0" layoutY="40.0" mnemonicParsing="false" text="Week" toggleGroup="$tg1" />
+      <RadioButton fx:id="MainMonth" layoutX="796.0" layoutY="40.0" mnemonicParsing="false" text="Month" toggleGroup="$tg1" />
    </children>
 </AnchorPane>

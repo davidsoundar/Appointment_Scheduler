@@ -33,7 +33,6 @@ public class FirstLevelDivisionSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            {
 
                 statement.setString(1, country);
                 ResultSet result = statement.executeQuery();
@@ -42,7 +41,6 @@ public class FirstLevelDivisionSQL {
                     divisions.add(newDivision(result));
                 }
                 return divisions;
-            }
         }catch (SQLException exception) {
             exception.printStackTrace();
         }

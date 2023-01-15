@@ -135,10 +135,11 @@ public class AppointmentsController {
     }
 
     /**
-     * Lambda expressions used to iterate through contacts, users, and customers to create new lists containing ID and name. Also iterates through time ranges for observable list. Function sends appointment into the fields
+     * Lambda expressions used to iterate through contacts, users, and customers to create new lists containing ID and name. Function sends appointment info into the fields of the appointment view
      * @param appointment
      */
     public void appointmentInfo(Appointment appointment) {
+        ObservableList<String> time = FXCollections.observableArrayList();
         try {
             ObservableList<String> con = contactList().stream().map(contact -> contact.getContact_ID() + ":" + contact.getContact_name()).collect(Collectors.toCollection(FXCollections::observableArrayList));
             contactBox.setItems(con);
@@ -151,12 +152,18 @@ public class AppointmentsController {
 
             LocalTime start = LocalTime.of(8, 0);
             LocalTime end = LocalTime.of(22, 0);
+            time.add(start.toString());
+            while (start.isBefore(end)) {
+                start = start.plusMinutes(5);
+                time.add(start.toString());
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace(); }
 
-            ObservableList<String> time = Stream.iterate(start, t->t.plusMinutes(5)).limit(end.toSecondOfDay() - start.toSecondOfDay()).map(Object::toString).collect(Collectors.toCollection(FXCollections::observableArrayList));
             AppointmentStartTimeBox.setItems(time);
             AppointmentEndTimeBox.setItems(time);
 
-            if (appointment != null) {
+            if (appointment != null) try{
                 AppointmentIDText.setText(Integer.toString(appointment.getAppointment_ID()));
                 titleTextField.setText(appointment.getTitle());
                 typeTextField.setText(appointment.getType());
@@ -169,8 +176,8 @@ public class AppointmentsController {
                 AppointmentEndTimeBox.setValue(appointment.getEnd_time().toLocalTime());
                 customerBox.setValue(appointment.getCustomer_ID());
                 userBox.setValue(appointment.getUser_ID());
-            }
-        } catch (Exception e) {
+
+            } catch (Exception e) {
             e.printStackTrace();
         }
     }

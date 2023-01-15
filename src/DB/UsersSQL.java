@@ -47,14 +47,12 @@ public class UsersSQL {
             Connection connection = JDBC.getConnection();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
-            {
 
                 while (result.next()) {
                     User user = new User(result.getInt("User_ID"), result.getString("User_Name"));
                     users.add(user);
                 }
                 return users;
-            }
         }catch (SQLException e) {
             e.printStackTrace();
         }

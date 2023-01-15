@@ -65,18 +65,20 @@ public class AppointmentSQL {
      * delete appointment from database
      * @param appointmentID int
      * @return boolean
-     * @throws SQLException
      */
-    public static boolean deleteAppointmentFromDB(int appointmentID) throws SQLException {
+    public static boolean deleteAppointmentFromDB(int appointmentID) {
         String sql = "DELETE FROM appointments WHERE Appointment_ID=?;";
 
-        try(Connection connection = JDBC.getConnection();
-            PreparedStatement s = connection.prepareStatement(sql)) {
-            s.setInt(1, appointmentID);
-            s.executeUpdate();
-
-            return true;
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement s = connection.prepareStatement(sql);
+                s.setInt(1, appointmentID);
+                s.execute();
+                return true;
+        } catch (SQLException sqlexc) {
+            sqlexc.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -89,7 +91,7 @@ public class AppointmentSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT a.*, c.Contact_Name FROM appointments a JOIN contacts c ON a.Contact_ID=c.Contact_ID WHERE a.Customer_ID=?");
-            {
+
                 statement.setInt(1, customerID);
                 ResultSet r = statement.executeQuery();
                 ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -103,7 +105,6 @@ public class AppointmentSQL {
 
                 }
                 return appointments;
-            }
         }catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -131,7 +132,7 @@ public class AppointmentSQL {
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(statement);
-            {
+
                 s.setString(1, title);
                 s.setString(2, type);
                 s.setString(3, description);
@@ -143,7 +144,6 @@ public class AppointmentSQL {
                 s.setInt(9, contact_name);
                 s.executeUpdate();
                 return true;
-            }
         }catch (SQLException sqlExc) {
             sqlExc.printStackTrace();
         }
@@ -166,12 +166,10 @@ public class AppointmentSQL {
      * @throws SQLException
      */
     public static boolean updateAppointmentInDB(String title, String type, String description, String location, LocalDateTime start, LocalDateTime end, int customer_ID, int user_ID, int contact_name, int appointment_ID) throws SQLException {
-        String statement = "UPDATE appointments SET Title = ?, Type=?, Description =?, Location=?, Contact_ID=?, Start=?, End=?, Customer_ID=?, User_ID=? WHERE Appointment_ID=?; ";
-
+        String statement = "UPDATE appointments SET Title = ?, Type=?, Description =?, Location=?, Start=?, End=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID=?; ";
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement s = connection.prepareStatement(statement);
-            {
                 s.setString(1, title);
                 s.setString(2, type);
                 s.setString(3, description);
@@ -179,12 +177,11 @@ public class AppointmentSQL {
                 s.setTimestamp(5, Timestamp.valueOf(start));
                 s.setTimestamp(6, Timestamp.valueOf(end));
                 s.setInt(7, customer_ID);
-                s.setInt(8, customer_ID);
+                s.setInt(8, user_ID);
                 s.setInt(9, contact_name);
                 s.setInt(10, appointment_ID);
-                s.executeUpdate();
+                s.execute();
                 return true;
-            }
         }catch (SQLException sqlExc) {
             sqlExc.printStackTrace();
         }
