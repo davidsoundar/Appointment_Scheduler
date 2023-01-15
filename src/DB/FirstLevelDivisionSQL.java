@@ -30,17 +30,20 @@ public class FirstLevelDivisionSQL {
         String sql = "SELECT first_level_divisions.Division_ID, countries.Country_ID, first_level_divisions.Division FROM countries, first_level_divisions WHERE countries.Country=? AND countries.Country_ID = first_level_divisions.Country_ID;";
         ObservableList<Division> divisions = FXCollections.observableArrayList();
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            {
 
-            statement.setString(1, country);
-            ResultSet result = statement.executeQuery();
+                statement.setString(1, country);
+                ResultSet result = statement.executeQuery();
 
-            while (result.next()) {
-                divisions.add(newDivision(result));
+                while (result.next()) {
+                    divisions.add(newDivision(result));
+                }
+                return divisions;
             }
-            return divisions;
-        } catch (SQLException exception) {
+        }catch (SQLException exception) {
             exception.printStackTrace();
         }
         return null;

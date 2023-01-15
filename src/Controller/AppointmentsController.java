@@ -146,7 +146,7 @@ public class AppointmentsController {
             ObservableList<String> cus = customerList().stream().map(customer -> customer.getCustomer_ID() + ":" + customer.getCustomer_Name()).collect(Collectors.toCollection(FXCollections::observableArrayList));
             customerBox.setItems(cus);
 
-            ObservableList<String> user = getUsers().stream().map(user1 -> user1.getUserID() + ":" + user1.getUserName()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+            ObservableList<String> user = getUsers().stream().map(u -> u.getUserID() + ":" + u.getUserName()).collect(Collectors.toCollection(FXCollections::observableArrayList));
             userBox.setItems(user);
 
             LocalTime start = LocalTime.of(8, 0);

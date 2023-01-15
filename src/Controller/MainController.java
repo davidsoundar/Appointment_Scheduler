@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Appointment;
+import Model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import static DB.AppointmentSQL.makeAppointmentListForMain;
 import static DB.CustomerSQL.customersData;
 import static Main.helpers.alert;
+import static javafx.fxml.FXMLLoader.load;
 
 
 /**
@@ -37,6 +39,14 @@ public class MainController {
     public TableColumn MainAppointmentCustomerCol;
     public TableColumn MainAppointmentUserCol;
     public TableColumn MainAppointmentContactCol;
+    public TableColumn MainCustomerIDCol;
+    public TableColumn MainCustomerNameCol;
+    public TableColumn MainCustomerAddressCol;
+    public TableColumn MainCustomerPostalCol;
+    public TableColumn MainCustomerCountryCol;
+    public TableColumn MainCustomerDivisionCol;
+    public TableColumn MainCustomerPhoneCol;
+    public TableView<Customer> customersTable;
 
     @FXML
     public void initialize() {
@@ -52,6 +62,16 @@ public class MainController {
         MainAppointmentUserCol.setCellValueFactory(new PropertyValueFactory<>("user_ID"));
         MainAppointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contact_name"));
 
+        customersTable.setItems(customersData());
+        MainCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("customer_ID"));
+        MainCustomerNameCol.setCellValueFactory(new PropertyValueFactory<>("customer_Name"));
+        MainCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        MainCustomerPostalCol.setCellValueFactory(new PropertyValueFactory<>("Postal_Code"));
+        MainCustomerCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
+        MainCustomerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
+        MainCustomerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
+
+
     }
 
     /**
@@ -60,18 +80,23 @@ public class MainController {
      * @throws IOException
      */
     public static void returnToMain(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(MainController.class.getResource("/Views/MainView.fxml"));
+        Parent root = load(MainController.class.getResource("/Views/MainView.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Function to go to the appointment view when update appointment is clicked
+     * @param event clicking update appointment
+     * @throws IOException
+     */
     @FXML
     void ClickUpdateAppointment(ActionEvent event) throws IOException {
         Appointment appointment = appointmentsTable.getSelectionModel().getSelectedItem();
         if (appointment != null) {
-            FXMLLoader loader = new FXMLLoader((getClass()).getResource("Appointment.fxml"));
+            FXMLLoader loader = new FXMLLoader((getClass()).getResource("/Views/AppointmentsView.fxml"));
             Parent root = loader.load();
             AppointmentsController appointmentsController = loader.getController();
             appointmentsController.appointmentInfo(appointment);
@@ -82,6 +107,18 @@ public class MainController {
         else {
             alert("Select an appointment");
         }
+    }
+
+    /**
+     * Function to go to the reports view when reports button is clicked
+     * @param event reports button clicked
+     * @throws IOException
+     */
+    public void ClickReports(ActionEvent event) throws IOException {
+        Parent root = load(getClass().getResource("/Views/ReportsView.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
 

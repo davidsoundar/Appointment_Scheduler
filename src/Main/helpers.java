@@ -3,7 +3,7 @@ package Main;
 import javafx.scene.control.Alert;
 
 /**
- * Helper functions that will be used for things throughout the project
+ * Class that contains the alert function
  */
 public class helpers {
 

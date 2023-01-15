@@ -10,7 +10,9 @@ public class Customer {
     private String Postal_Code;
     private String country;
     private String Phone;
-    private String division_ID;
+    private String division;
+    private int division_ID;
+    private int country_ID;
 
     /**
      * Constructor for a customer
@@ -22,14 +24,16 @@ public class Customer {
      * @param phone
      * @param division_ID
      */
-    public Customer(int customer_ID, String customer_Name, String address, String postal_Code, String country, String phone, String division_ID) {
+    public Customer(int customer_ID, String customer_Name, String address, String postal_Code, String country, String phone, String division, int division_ID, int country_ID) {
         this.customer_ID = customer_ID;
         this.customer_Name = customer_Name;
         this.address = address;
         Postal_Code = postal_Code;
         this.country = country;
         Phone = phone;
+        this.division = division;
         this.division_ID = division_ID;
+        this.country_ID = country_ID;
     }
 
     /**
@@ -142,7 +146,7 @@ public class Customer {
      * division ID getter
      * @return
      */
-    public String getDivision_ID() {
+    public int getDivision_ID() {
         return division_ID;
     }
 
@@ -150,7 +154,23 @@ public class Customer {
      * division ID setter
      * @param division_ID
      */
-    public void setDivision_ID(String division_ID) {
+    public void setDivision_ID(int division_ID) {
         this.division_ID = division_ID;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public int getCountry_ID() {
+        return country_ID;
+    }
+
+    public void setCountry_ID(int country_ID) {
+        this.country_ID = country_ID;
     }
 }
